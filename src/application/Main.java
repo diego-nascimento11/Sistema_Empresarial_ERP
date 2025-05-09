@@ -76,6 +76,7 @@ public class Main {
                                     }
 
                                     for (int i = 1; i <= qtdOrder; i++) {
+                                        System.out.println();
                                         System.out.println("Digite os dados do Cliente #" + i + "º Pedido:");
                                         System.out.print("Nome: ");
                                         String name = sc.nextLine();
@@ -83,14 +84,14 @@ public class Main {
                                         String cpf = sc.nextLine();
                                         System.out.print("Email: ");
                                         String email = sc.nextLine();
-
+                                        System.out.println();
                                         System.out.println("Digite os itens do #" + i + "º Pedido:");
                                         System.out.print("Preço p/unidade: ");
                                         Double unitPrice = sc.nextDouble();
                                         System.out.print("Quantia: ");
                                         Integer quantityItem = sc.nextInt();
                                         sc.nextLine();
-                                        System.out.print("Status do pedido: ");
+                                        System.out.print("Status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
                                         String orderProcessing = sc.nextLine();
 
                                         clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, OrderProcessing.valueOf(orderProcessing)));
@@ -105,7 +106,7 @@ public class Main {
                                         System.out.println();
                                         System.out.println("| Nenhum pedido cadastrado.");
                                         System.out.println();
-                                        Thread.sleep(3000);
+                                        Thread.sleep(1000);
                                     } else {
 
                                         for (int i = 0; i < 10; i++) {
@@ -135,7 +136,9 @@ public class Main {
                                                 System.out.println();
                                                 System.out.print("| O número inserido deve ser maior que 0. ");
                                             } else {
-                                                // TO-DOO editar dados do cliente
+                                                System.out.println();
+                                                System.out.println(" | Dados da conta |");
+                                                System.out.println(clients.get(n-1).toString());
                                             }
 
                                         } while (n != 0);
@@ -172,6 +175,10 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println();
                 System.out.println("| A opção digitada não é reconhecida como um número.");
+                System.out.println();
+            } catch (IllegalArgumentException e) {
+                System.out.println();
+                System.out.print("Status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
                 System.out.println();
             }
 
