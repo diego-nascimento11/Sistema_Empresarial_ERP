@@ -16,9 +16,9 @@ public class Main {
             System.out.println("|                     Sistema de Gestão Empresarial                       |");
             System.out.println("===========================================================================");
             System.out.println("1. Entrar no módulo de Vendas (realizar ou consultar pedidos).");
-            System.out.println("2. Acessar Controle de Estoque (visualizar, adicionar ou remover produtos).");
-            System.out.println("3. Gerenciar Recursos Humanos (cadastro e administração de funcionários).");
-            System.out.println("4. Acessar Financeiro (consultar receitas, despesas e relatórios).");
+            System.out.println("2. Acessar Controle de Estoque (entrada, relatórios e controle de produtos).");
+            System.out.println("3. Gerenciar Recursos Humanos (cadastro, registro, cálculo).");
+            System.out.println("4. Acessar Financeiro (controle, fluxo e relatório).");
             System.out.println("0. Sair");
             System.out.println("===========================================================================");
             System.out.print("Escolha uma opção para prosseguir: ");
@@ -50,15 +50,14 @@ public class Main {
                         System.out.println("Programa encerrado, tchau.");
                         System.exit(0);
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println();
                 System.out.println("| A opção digitada não é reconhecida como um número.");
                 System.out.println();
                 Thread.sleep(3000);
             }
 
-            System.out.print("Pressione [ENTER] para retornar ao menu.");
-            sc.nextLine();
+            n = sc.nextInt();
 
         } while (n != 0);
 
