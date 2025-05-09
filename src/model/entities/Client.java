@@ -19,11 +19,6 @@ public abstract class Client {
 
     public String toString() {
         System.out.println();
-        return String.format("|Nome: "
-                + name
-                + "\n|CPF: "
-                + cpf
-                + "\n|Email: "
-                + email);
+        return String.format("|Nome: %s\n|CPF: %s\n|Email: %s", name, cpf, email);
     }
 }

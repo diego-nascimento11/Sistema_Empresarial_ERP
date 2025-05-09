@@ -1,14 +1,20 @@
 package application;
 
-import java.util.Locale;
-import java.util.Scanner;
+import model.entities.Client;
+import model.entities.ItemOrder;
+
+import java.sql.SQLOutput;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         Scanner sc = new Scanner(System.in).useLocale(Locale.US);
 
+        List<Client> clients = new ArrayList<>();
+
         int n = 0;
+        boolean inSalesMenu = true;
 
         do {
 
@@ -24,7 +30,9 @@ public class Main {
             System.out.print("Escolha uma opção para prosseguir: ");
 
             try {
+
                 n = Integer.parseInt(sc.nextLine());
+
                 if (n < 0 || n > 4) {
                     System.out.println();
                     System.out.println("| Opção inválida. Digite um número entre 0 e 4.");
@@ -32,20 +40,96 @@ public class Main {
                     Thread.sleep(3000);
                     continue;
                 }
-                System.out.println("a");
+
                 switch (n) {
                     case 1:
                         // Módulo de vendas
+                        for (int i = 0; i < 10; i++) {
+                            System.out.println();
+                        }
+                        while (inSalesMenu) {
+                        System.out.println("============================");
+                        System.out.println("|   Operações Comerciais   |");
+                        System.out.println("============================");
+                        System.out.println("1. Realizar pedido.");
+                        System.out.println("2. Consultar pedidos.");
+                        System.out.println("0. Voltar.");
+                        System.out.println("============================");
+                        System.out.print("Escolha uma opção: ");
+                        Integer choice = Integer.parseInt(sc.nextLine());
+                        if (choice < 0 || choice > 2) {
+                            System.out.println();
+                            System.out.print("| O número de pedidos deve ser maior que 0. ");
+                            break;
+                        }
+                            switch (choice) {
+                                case 1:
+                                    System.out.println("====================");
+                                    System.out.println("| Cadastrar pedido |");
+                                    System.out.println("=====================");
+                                    System.out.print("Quantos pedidos serão realizados: ");
+
+                                    Integer qtdOrder = Integer.parseInt(sc.nextLine());
+
+                                    if (qtdOrder <= 0) {
+                                        System.out.println("| O número de pedidos deve ser maior que 0.");
+                                    }
+
+                                    for (int i = 1; i <= qtdOrder; i++) {
+                                        System.out.println("Digite os dados do Cliente #" + i + "º Pedido:");
+                                        System.out.print("Nome: ");
+                                        String name = sc.nextLine();
+                                        System.out.print("CPF: ");
+                                        String cpf = sc.nextLine();
+                                        System.out.print("Email: ");
+                                        String email = sc.nextLine();
+
+                                        System.out.println("Digite os itens do #" + i + "º Pedido:");
+                                        System.out.print("Preço p/unidade: ");
+                                        Double unitPrice = sc.nextDouble();
+                                        System.out.print("Quantia: ");
+                                        Integer quantityItem = sc.nextInt();
+                                        sc.nextLine();
+
+                                        clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem));
+                                    }
+
+                                    System.out.println("| Todos os pedidos foram cadastrados com sucesso.");
+                                    break;
+
+                                case 2:
+                                    if (clients.isEmpty()) {
+                                        System.out.println();
+                                        System.out.println("| Nenhum pedido cadastrado.");
+                                        System.out.println();
+                                        Thread.sleep(3000);
+                                    } else {
+                                        for (Client c : clients) {
+                                            System.out.println(c.toString());
+
+                                        }
+                                    }
+                                    break;
+                                case 0:
+                                    inSalesMenu = false;
+                                    break;
+                            }
+
+                        }
                         break;
+
                     case 2:
                         // Módulo de estoque
                         break;
+
                     case 3:
                         // Módulo de RH
                         break;
+
                     case 4:
                         // Módulo financeiro
                         break;
+
                     case 0:
                         System.out.println("Programa encerrado, tchau.");
                         System.exit(0);
@@ -57,7 +141,7 @@ public class Main {
                 Thread.sleep(3000);
             }
 
-            n = sc.nextInt();
+
 
         } while (n != 0);
 

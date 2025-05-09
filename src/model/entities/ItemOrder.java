@@ -15,12 +15,13 @@ public class ItemOrder extends Client {
 
     @Override
     public String toString() {
-        return "|Preço p/Unidade: " +
-                unitPrice + "\n|Quantidade: " +
-                quantityItem;
+        return super.toString() +
+                "\n|Preço p/Unidade: " + unitPrice +
+                "\nQuantidade: " + quantityItem +
+                "\nTotal: " + total();
     }
 
-    public Double change() {
+    public Double total() {
         return unitPrice * quantityItem;
     }
 
