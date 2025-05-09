@@ -2,8 +2,8 @@ package application;
 
 import model.entities.Client;
 import model.entities.ItemOrder;
+import model.entities.OrderProcessing;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -90,24 +90,59 @@ public class Main {
                                         System.out.print("Quantia: ");
                                         Integer quantityItem = sc.nextInt();
                                         sc.nextLine();
+                                        System.out.print("Status do pedido: ");
+                                        String orderProcessing = sc.nextLine();
 
-                                        clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem));
+                                        clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, OrderProcessing.valueOf(orderProcessing)));
                                     }
 
                                     System.out.println("| Todos os pedidos foram cadastrados com sucesso.");
                                     break;
 
                                 case 2:
+
                                     if (clients.isEmpty()) {
                                         System.out.println();
                                         System.out.println("| Nenhum pedido cadastrado.");
                                         System.out.println();
                                         Thread.sleep(3000);
                                     } else {
-                                        for (Client c : clients) {
-                                            System.out.println(c.toString());
 
+                                        for (int i = 0; i < 10; i++) {
+                                            System.out.println();
                                         }
+
+                                        System.out.println("=======================");
+                                        System.out.println("| Pedidos cadastrados |");
+                                        System.out.println("=======================");
+
+                                        int count = 1;
+
+                                        for (Client c : clients) {
+                                            System.out.println("Pedido #" + count++);
+                                            System.out.println(c.toString());
+                                        }
+
+                                        do {
+
+                                            System.out.println();
+                                            System.out.println("==============================");
+                                            System.out.print("\nDigite 0 para retornar ao menu.\nDigite o número do pedido que deseja editar os dados: ");
+
+                                            n = Integer.parseInt(sc.nextLine());
+
+                                            if (n <= 0) {
+                                                System.out.println();
+                                                System.out.print("| O número inserido deve ser maior que 0. ");
+                                            } else {
+                                                // TO-DOO editar dados do cliente
+                                            }
+
+                                        } while (n != 0);
+
+
+
+
                                     }
                                     break;
                                 case 0:
@@ -138,7 +173,6 @@ public class Main {
                 System.out.println();
                 System.out.println("| A opção digitada não é reconhecida como um número.");
                 System.out.println();
-                Thread.sleep(3000);
             }
 
 
