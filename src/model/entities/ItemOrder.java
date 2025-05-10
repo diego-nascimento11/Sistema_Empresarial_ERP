@@ -15,13 +15,38 @@ public class ItemOrder extends Client {
         this.orderProcessing = orderProcessing;
     }
 
+    public OrderProcessing getOrderProcessing() {
+        return orderProcessing;
+    }
+
+    public void setOrderProcessing(OrderProcessing orderProcessing) {
+        this.orderProcessing = orderProcessing;
+    }
+
+    public Double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(Double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public Integer getQuantityItem() {
+        return quantityItem;
+    }
+
+    public void setQuantityItem(Integer quantityItem) {
+        this.quantityItem = quantityItem;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
-                "\n====" +
-                "\n|Preço p/Unidade: " + unitPrice +
-                "\nQuantidade: " + quantityItem +
-                "\nTotal: " + total();
+                String.format("\n| Preço p/Unidade: %.2f", unitPrice ) +
+                "\n| Quantidade: " + quantityItem +
+                "\n| Status do pedido: " + orderProcessing +
+                String.format("\n| Total: %.2f", total()) +
+                "\n=====================";
     }
 
     public Double total() {

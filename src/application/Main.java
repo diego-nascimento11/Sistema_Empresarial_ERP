@@ -4,20 +4,24 @@ import model.entities.Client;
 import model.entities.ItemOrder;
 import model.entities.OrderProcessing;
 
+import javax.swing.*;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        Scanner sc = new Scanner(System.in).useLocale(Locale.US);
+        Scanner sc = new Scanner(System.in);
 
         List<Client> clients = new ArrayList<>();
 
-        int n = 0;
-        boolean inSalesMenu = true;
+        Integer qtdOrder = 0, salesOption = 0, choice = 100, quantityItem, editOrder = 0;
+        String name, cpf, email;
+        Date date;
+        Double unitPrice;
+        boolean validStatus = false;
 
         do {
-
             System.out.println("===========================================================================");
             System.out.println("|                     Sistema de Gestão Empresarial                       |");
             System.out.println("===========================================================================");
@@ -31,23 +35,31 @@ public class Main {
 
             try {
 
-                n = Integer.parseInt(sc.nextLine());
+                choice = Integer.parseInt(sc.nextLine());
 
-                if (n < 0 || n > 4) {
+                if (choice < 0 || choice > 4) {
                     System.out.println();
-                    System.out.println("| Opção inválida. Digite um número entre 0 e 4.");
-                    System.out.println();
-                    Thread.sleep(3000);
+                    System.out.println("| Opção inválida, opções disponíveis: (1, 2, 3, 4 e 0).");
                     continue;
                 }
 
-                switch (n) {
-                    case 1:
-                        // Módulo de vendas
-                        for (int i = 0; i < 10; i++) {
-                            System.out.println();
-                        }
-                        while (inSalesMenu) {
+            } catch (NumberFormatException e) {
+                System.out.println();
+                System.out.println("| A opção digitada não é reconhecida como número.");
+                System.out.println();
+                Thread.sleep(1000);
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println();
+                    }
+
+                    do {
+
                         System.out.println("============================");
                         System.out.println("|   Operações Comerciais   |");
                         System.out.println("============================");
@@ -56,135 +68,196 @@ public class Main {
                         System.out.println("0. Voltar.");
                         System.out.println("============================");
                         System.out.print("Escolha uma opção: ");
-                        Integer choice = Integer.parseInt(sc.nextLine());
-                        if (choice < 0 || choice > 2) {
+
+                        try {
+
+                            salesOption = Integer.parseInt(sc.nextLine());
+
+                            if (salesOption == 0) {
+                                System.out.println();
+                                System.out.println("| Retornando ao menu... ");
+                                System.out.println();
+                                Thread.sleep(1000);
+                                break;
+                            } else if (salesOption > 2) {
+                                System.out.println();
+                                System.out.println("| O número inserido não é considerado uma opção.");
+                                System.out.println();
+                                Thread.sleep(1000);
+                                break;
+                            }
+
+                        } catch (NumberFormatException e) {
                             System.out.println();
-                            System.out.print("| O número de pedidos deve ser maior que 0. ");
-                            break;
+                            System.out.println("| A opção digitada não é reconhecida como número.");
+                            System.out.println();
+                            Thread.sleep(1000);
+                            continue;
                         }
-                            switch (choice) {
-                                case 1:
-                                    System.out.println("====================");
-                                    System.out.println("| Cadastrar pedido |");
-                                    System.out.println("=====================");
-                                    System.out.print("Quantos pedidos serão realizados: ");
 
-                                    Integer qtdOrder = Integer.parseInt(sc.nextLine());
+                        switch (salesOption) {
+                            case 1:
 
-                                    if (qtdOrder <= 0) {
-                                        System.out.println("| O número de pedidos deve ser maior que 0.");
+                                do {
+
+                                    for (int i = 0; i < 10; i++) {
+                                        System.out.println();
                                     }
 
-                                    for (int i = 1; i <= qtdOrder; i++) {
+                                System.out.println("====================");
+                                System.out.println("| Cadastrar pedido |");
+                                System.out.println("=====================");
+                                System.out.print("|Quantos pedidos serão realizados: ");
+
+                                try {
+
+                                    qtdOrder = Integer.parseInt(sc.nextLine());
+
+                                    if (qtdOrder == 0) {
                                         System.out.println();
-                                        System.out.println("Digite os dados do Cliente #" + i + "º Pedido:");
-                                        System.out.print("Nome: ");
-                                        String name = sc.nextLine();
-                                        System.out.print("CPF: ");
-                                        String cpf = sc.nextLine();
-                                        System.out.print("Email: ");
-                                        String email = sc.nextLine();
-                                        System.out.println();
-                                        System.out.println("Digite os itens do #" + i + "º Pedido:");
-                                        System.out.print("Preço p/unidade: ");
-                                        Double unitPrice = sc.nextDouble();
-                                        System.out.print("Quantia: ");
-                                        Integer quantityItem = sc.nextInt();
-                                        sc.nextLine();
-                                        System.out.print("Status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
-                                        String orderProcessing = sc.nextLine();
-
-                                        clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, OrderProcessing.valueOf(orderProcessing)));
-                                    }
-
-                                    System.out.println("| Todos os pedidos foram cadastrados com sucesso.");
-                                    break;
-
-                                case 2:
-
-                                    if (clients.isEmpty()) {
-                                        System.out.println();
-                                        System.out.println("| Nenhum pedido cadastrado.");
+                                        System.out.println("| Quantidade mínima: 1");
                                         System.out.println();
                                         Thread.sleep(1000);
-                                    } else {
+                                        continue;
+                                    }
 
-                                        for (int i = 0; i < 10; i++) {
-                                            System.out.println();
-                                        }
+                                } catch (NumberFormatException e) {
+                                    System.out.println();
+                                    System.out.println("| A opção digitada não é reconhecida como número.");
+                                    System.out.println();
+                                    Thread.sleep(1000);
+                                    continue;
+                                }
 
-                                        System.out.println("=======================");
-                                        System.out.println("| Pedidos cadastrados |");
-                                        System.out.println("=======================");
+                                    for (int i = 1; i <= qtdOrder; i++) {
 
-                                        int count = 1;
+                                        System.out.println("Digite os dados do Cliente #" + i + "º Pedido:");
+                                        System.out.print("Nome: ");
+                                        name = sc.nextLine();
 
-                                        for (Client c : clients) {
-                                            System.out.println("Pedido #" + count++);
-                                            System.out.println(c.toString());
-                                        }
+                                        System.out.print("CPF: ");
+                                        cpf = sc.nextLine();
+
+                                        System.out.print("Email: ");
+                                        email = sc.nextLine();
+                                        System.out.println();
+
+                                        System.out.println("Digite os itens do #" + i + "º Pedido:");
+
+                                       try {
+                                           System.out.print("Preço p/unidade: ");
+                                           unitPrice = Double.parseDouble(sc.nextLine());
+                                           System.out.print("Quantia: ");
+                                           quantityItem = Integer.parseInt(sc.nextLine());
+                                       } catch (NumberFormatException e) {
+                                           System.out.println();
+                                           System.out.println("| Entrada inválida para preço ou quantidade. Pedido cancelado.");
+                                           System.out.println();
+                                           i--;
+                                           continue;
+                                       }
 
                                         do {
 
-                                            System.out.println();
-                                            System.out.println("==============================");
-                                            System.out.print("\nDigite 0 para retornar ao menu.\nDigite o número do pedido que deseja editar os dados: ");
-
-                                            n = Integer.parseInt(sc.nextLine());
-
-                                            if (n <= 0) {
-                                                System.out.println();
-                                                System.out.print("| O número inserido deve ser maior que 0. ");
-                                            } else {
-                                                System.out.println();
-                                                System.out.println(" | Dados da conta |");
-                                                System.out.println(clients.get(n-1).toString());
+                                            try {
+                                                System.out.print("Status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
+                                                String statusStr = sc.nextLine().toUpperCase();
+                                                OrderProcessing orderProcessing = OrderProcessing.valueOf(statusStr);
+                                                validStatus = true;
+                                                clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, orderProcessing));
+                                            } catch (IllegalArgumentException e) {
+                                                System.out.println("| Status inválido, tente novamente.");
                                             }
 
-                                        } while (n != 0);
+                                            System.out.println("===============");
 
-
-
+                                        } while (!validStatus);
 
                                     }
-                                    break;
-                                case 0:
-                                    inSalesMenu = false;
-                                    break;
-                            }
 
+                                    if (qtdOrder == 1) {
+                                        System.out.println("| O pedido foi cadastrado com sucesso.");
+                                        Thread.sleep(1000);
+                                    } else {
+                                        System.out.println("| Os " + qtdOrder + " pedidos foram cadastrados com sucesso.");
+                                        Thread.sleep(1000);
+                                    }
+
+                        } while (qtdOrder == 0);
+
+                                break;
+
+                            case 2:
+
+                                for (int i = 0; i < 10; i++) {
+                                    System.out.println();
+                                }
+
+                                if (clients.isEmpty()) {
+                                    System.out.println("| Nenhum pedido cadastrado.");
+                                    System.out.println();
+                                    Thread.sleep(1000);
+                                } else {
+                                    System.out.println("=====================");
+                                    System.out.println("| Consultar Pedidos |");
+                                    System.out.println("=====================");
+
+                                    int count = 1;
+
+                                    for (Client c : clients) {
+                                        System.out.println("| Pedido: " + count++);
+                                        System.out.println(c.toString());
+                                    }
+                                    
+                                    validStatus = false;
+
+                                    do {
+
+                                        try {
+                                            System.out.println("Digite o número do pedido a ser editado, digite 0 para voltar ao menu: ");
+                                            editOrder = Integer.parseInt(sc.nextLine());
+                                            if (editOrder == 0) break;
+                                            if (editOrder < 1 || editOrder > clients.size()) {
+                                                System.out.println("| Número de pedido inválido.");
+                                            } else {
+                                                // TO - DOO
+                                                System.out.println("| Editar funcionalidade ainda não implementada");
+                                            }
+                                            validStatus = true;
+                                        } catch (InputMismatchException e) {
+                                            System.out.println("Erro: entrada inválida. Por favor, digite um número inteiro.");
+                                        }
+
+                                    } while (!validStatus);
+                                    
+                                    if (editOrder == 0) {
+                                        System.out.println("Retornando ao menu...");
+                                        Thread.sleep(1000);
+                                        break;
+                                    }
+                                    
+                                    
+                                    
+
+                                }
+
+                                break;
+                                
                         }
-                        break;
 
-                    case 2:
-                        // Módulo de estoque
-                        break;
+                    } while (salesOption != 0);
 
-                    case 3:
-                        // Módulo de RH
-                        break;
 
-                    case 4:
-                        // Módulo financeiro
-                        break;
+                    break;
 
-                    case 0:
-                        System.out.println("Programa encerrado, tchau.");
-                        System.exit(0);
-                }
-            } catch (NumberFormatException e) {
-                System.out.println();
-                System.out.println("| A opção digitada não é reconhecida como um número.");
-                System.out.println();
-            } catch (IllegalArgumentException e) {
-                System.out.println();
-                System.out.print("Status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
-                System.out.println();
+                case 2:
+                    break;
+
+                case 0:
+                    return;
             }
+        } while (choice != 0);
 
-
-
-        } while (n != 0);
 
 
         sc.close();

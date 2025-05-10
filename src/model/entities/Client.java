@@ -51,7 +51,7 @@ public abstract class Client {
 
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        return String.format("|Nome: %s\n|CPF: %s\n|Email: %s\n|Data do pedido: %s", name, cpf, email, fmt.format(date));
+        return String.format("| Nome: %s\n| CPF: %s\n| Email: %s\n| Data do pedido: %s", name, cpf, email, fmt.format(date));
     }
 
 }
