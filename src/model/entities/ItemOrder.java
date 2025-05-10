@@ -39,6 +39,7 @@ public class ItemOrder extends Client {
         this.quantityItem = quantityItem;
     }
 
+
     @Override
     public String toString() {
         return super.toString() +
@@ -52,8 +53,6 @@ public class ItemOrder extends Client {
     public Double total() {
         return unitPrice * quantityItem;
     }
-
-    
 
 
 }

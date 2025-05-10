@@ -189,39 +189,36 @@ public class Main {
 
                             case 2:
 
-                                for (int i = 0; i < 10; i++) {
-                                    System.out.println();
-                                }
-
                                 if (clients.isEmpty()) {
                                     System.out.println("| Nenhum pedido cadastrado.");
                                     System.out.println();
                                     Thread.sleep(1000);
                                 } else {
+                                    for (int i = 0; i < 10; i++) {
+                                        System.out.println();
+                                    }
                                     System.out.println("=====================");
                                     System.out.println("| Consultar Pedidos |");
                                     System.out.println("=====================");
 
                                     int count = 1;
 
-                                    for (Client c : clients) {
+                                    for (int i = 0; i < clients.size(); i++) {
                                         System.out.println("| Pedido: " + count++);
-                                        System.out.println(c.toString());
+                                        System.out.println(clients.get(i).toString());
                                     }
                                     
                                     validStatus = false;
 
                                     do {
 
-                                        try {
-                                            System.out.println("Digite o número do pedido a ser editado, digite 0 para voltar ao menu: ");
+                                        try { // TO - DOO arrumar essa palhaçada aqui que ta dando erro quando tento acessar os dados do pedido para edição
+                                            System.out.print("Digite o número do pedido a ser editado, digite 0 para voltar ao menu: ");
                                             editOrder = Integer.parseInt(sc.nextLine());
-                                            if (editOrder == 0) break;
                                             if (editOrder < 1 || editOrder > clients.size()) {
                                                 System.out.println("| Número de pedido inválido.");
                                             } else {
-                                                // TO - DOO
-                                                System.out.println("| Editar funcionalidade ainda não implementada");
+                                                clients.get(editOrder).toString();
                                             }
                                             validStatus = true;
                                         } catch (InputMismatchException e) {
