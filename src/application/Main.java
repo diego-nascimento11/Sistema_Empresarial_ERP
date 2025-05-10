@@ -63,14 +63,14 @@ public class Main {
                         System.out.println();
                     }
 
-                    do {
+                    while (true) {
 
                         System.out.println("============================");
                         System.out.println("|   Operações Comerciais   |");
                         System.out.println("============================");
                         System.out.println("1. Realizar pedido.");
                         System.out.println("2. Consultar pedidos.");
-                        System.out.println("0. Voltar.");
+                        System.out.println("0. Voltar ao menu principal.");
                         System.out.println("============================");
                         System.out.print("Escolha uma opção: ");
 
@@ -89,7 +89,7 @@ public class Main {
                                 System.out.println("| O número inserido não é considerado uma opção.");
                                 System.out.println();
                                 Thread.sleep(1000);
-                                break;
+                                continue;
                             }
 
                         } catch (NumberFormatException e) {
@@ -100,19 +100,20 @@ public class Main {
                             continue;
                         }
 
+
                         switch (salesOption) {
                             case 1:
 
-                                do {
+                                for (int i = 0; i < 10; i++) {
+                                    System.out.println();
+                                }
 
-                                    for (int i = 0; i < 10; i++) {
-                                        System.out.println();
-                                    }
+                                do {
 
                                     System.out.println("====================");
                                     System.out.println("| Cadastrar pedido |");
                                     System.out.println("=====================");
-                                    System.out.print("|Quantos pedidos serão realizados: ");
+                                    System.out.print("|Quantos pedidos serão realizados, digite 0 para voltar ao menu: ");
 
                                     try {
 
@@ -120,10 +121,10 @@ public class Main {
 
                                         if (qtdOrder == 0) {
                                             System.out.println();
-                                            System.out.println("| Quantidade mínima: 1");
+                                            System.out.println("| Retornando ao menu...");
                                             System.out.println();
                                             Thread.sleep(1000);
-                                            continue;
+                                            break;
                                         }
 
                                     } catch (NumberFormatException e) {
@@ -195,9 +196,11 @@ public class Main {
                             case 2:
 
                                 if (clients.isEmpty()) {
+                                    System.out.println();
                                     System.out.println("| Nenhum pedido cadastrado.");
                                     System.out.println();
                                     Thread.sleep(1000);
+                                    continue;
                                 } else {
                                     for (int i = 0; i < 10; i++) {
                                         System.out.println();
@@ -213,20 +216,20 @@ public class Main {
                                         System.out.println(clients.get(i).toString());
                                     }
 
-                                    validStatus = false;
-
-                                    do {
+                                    while (true) {
 
                                         try {
                                             System.out.print("Digite o número do pedido a ser editado, digite 0 para voltar ao menu: ");
                                             editOrder = Integer.parseInt(sc.nextLine());
-                                            if (editOrder < 1 || editOrder > clients.size()) {
+                                            if (editOrder == 0) {
+                                                break;
+                                            } else if (editOrder > clients.size()) {
                                                 System.out.println("| Número de pedido inválido.");
                                             } else {
-                                                validStatus = true;
                                                 index = editOrder - 1;
+                                                System.out.println("=====================");
                                                 System.out.println("Pedido: #" + editOrder);
-                                                System.out.println(clients.get(index).toString());2
+                                                System.out.println(clients.get(index).toString());
                                                 System.out.println("1. Editar nome.");
                                                 System.out.println("2. Editar cpf.");
                                                 System.out.println("3. Editar email.");
@@ -235,19 +238,49 @@ public class Main {
                                                 System.out.println("6. Editar quantidade.");
                                                 System.out.println("7. Editar status do pedido.");
                                                 System.out.println("0. Voltar.");
-                                                System.out.print("Escolha uma opção: ");
-                                                Integer editInfoOrder = Integer.parseInt(sc.nextLine());
+                                                while (true) {
+                                                    System.out.print("Escolha uma opção: ");
+                                                    Integer editInfoOrder = Integer.parseInt(sc.nextLine());
+                                                    if (editInfoOrder == 0) {
+                                                        System.out.println();
+                                                        System.out.println("| Retornando ao menu...");
+                                                        System.out.println();
+                                                        Thread.sleep(1000);
+                                                        break;
+                                                    } else if (editInfoOrder < 1 || editInfoOrder > 7) {
+                                                        System.out.println();
+                                                        System.out.println("| Opção inválida, digite novamente.");
+                                                        System.out.println();
+                                                        continue;
+                                                    }
+                                                }
                                             }
                                         } catch (InputMismatchException e) {
-                                            System.out.println("Erro: entrada inválida. Por favor, digite um número inteiro.");
+                                            System.out.println();
+                                            System.out.println("| ERRO: Por favor, digite um número inteiro.");
+                                            System.out.println();
+                                            Thread.sleep(1000);
+                                            continue;
                                         } catch (IndexOutOfBoundsException e) {
-                                            System.out.println("| Opção inválida.");
+                                            System.out.println();
+                                            System.out.println("| ERRO: Opção inválida.");
+                                            System.out.println();
+                                            Thread.sleep(1000);
+                                            continue;
+                                        } catch (NumberFormatException e) {
+                                            System.out.println();
+                                            System.out.println("| ERRO: O caractere inserido é inválido.");
+                                            System.out.println();
+                                            Thread.sleep(1000);
+                                            continue;
                                         }
 
-                                    } while (!validStatus);
+                                    }
 
                                     if (editOrder == 0) {
-                                        System.out.println("Retornando ao menu...");
+                                        System.out.println();
+                                        System.out.println("| Retornando ao menu...");
+                                        System.out.println();
                                         Thread.sleep(1000);
                                         break;
                                     }
@@ -257,9 +290,15 @@ public class Main {
 
                                 break;
 
-                        }
+                            case 0:
 
-                    } while (salesOption != 0);
+                                break;
+
+                        }
+                    }
+
+
+
 
 
                     break;
