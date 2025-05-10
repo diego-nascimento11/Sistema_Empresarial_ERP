@@ -15,11 +15,16 @@ public class Main {
 
         List<Client> clients = new ArrayList<>();
 
-        Integer qtdOrder = 0, salesOption = 0, choice = 100, quantityItem, editOrder = 0;
+        Integer qtdOrder = 0, salesOption = 0, choice = 100, quantityItem, editOrder = 0, index = 0;
         String name, cpf, email;
         Date date;
         Double unitPrice;
         boolean validStatus = false;
+
+        clients.add(new ItemOrder("Lucas", "303.987.302-13", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        clients.add(new ItemOrder("Diego", "239.987.232-0", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        clients.add(new ItemOrder("Raphael", "942.842.382-09", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+
 
         do {
             System.out.println("===========================================================================");
@@ -104,30 +109,30 @@ public class Main {
                                         System.out.println();
                                     }
 
-                                System.out.println("====================");
-                                System.out.println("| Cadastrar pedido |");
-                                System.out.println("=====================");
-                                System.out.print("|Quantos pedidos serão realizados: ");
+                                    System.out.println("====================");
+                                    System.out.println("| Cadastrar pedido |");
+                                    System.out.println("=====================");
+                                    System.out.print("|Quantos pedidos serão realizados: ");
 
-                                try {
+                                    try {
 
-                                    qtdOrder = Integer.parseInt(sc.nextLine());
+                                        qtdOrder = Integer.parseInt(sc.nextLine());
 
-                                    if (qtdOrder == 0) {
+                                        if (qtdOrder == 0) {
+                                            System.out.println();
+                                            System.out.println("| Quantidade mínima: 1");
+                                            System.out.println();
+                                            Thread.sleep(1000);
+                                            continue;
+                                        }
+
+                                    } catch (NumberFormatException e) {
                                         System.out.println();
-                                        System.out.println("| Quantidade mínima: 1");
+                                        System.out.println("| A opção digitada não é reconhecida como número.");
                                         System.out.println();
                                         Thread.sleep(1000);
                                         continue;
                                     }
-
-                                } catch (NumberFormatException e) {
-                                    System.out.println();
-                                    System.out.println("| A opção digitada não é reconhecida como número.");
-                                    System.out.println();
-                                    Thread.sleep(1000);
-                                    continue;
-                                }
 
                                     for (int i = 1; i <= qtdOrder; i++) {
 
@@ -144,18 +149,18 @@ public class Main {
 
                                         System.out.println("Digite os itens do #" + i + "º Pedido:");
 
-                                       try {
-                                           System.out.print("Preço p/unidade: ");
-                                           unitPrice = Double.parseDouble(sc.nextLine());
-                                           System.out.print("Quantia: ");
-                                           quantityItem = Integer.parseInt(sc.nextLine());
-                                       } catch (NumberFormatException e) {
-                                           System.out.println();
-                                           System.out.println("| Entrada inválida para preço ou quantidade. Pedido cancelado.");
-                                           System.out.println();
-                                           i--;
-                                           continue;
-                                       }
+                                        try {
+                                            System.out.print("Preço p/unidade: ");
+                                            unitPrice = Double.parseDouble(sc.nextLine());
+                                            System.out.print("Quantia: ");
+                                            quantityItem = Integer.parseInt(sc.nextLine());
+                                        } catch (NumberFormatException e) {
+                                            System.out.println();
+                                            System.out.println("| Entrada inválida para preço ou quantidade. Pedido cancelado.");
+                                            System.out.println();
+                                            i--;
+                                            continue;
+                                        }
 
                                         do {
 
@@ -183,7 +188,7 @@ public class Main {
                                         Thread.sleep(1000);
                                     }
 
-                        } while (qtdOrder == 0);
+                                } while (qtdOrder == 0);
 
                                 break;
 
@@ -207,7 +212,7 @@ public class Main {
                                         System.out.println("| Pedido: " + count++);
                                         System.out.println(clients.get(i).toString());
                                     }
-                                    
+
                                     validStatus = false;
 
                                     do {
@@ -218,28 +223,30 @@ public class Main {
                                             if (editOrder < 1 || editOrder > clients.size()) {
                                                 System.out.println("| Número de pedido inválido.");
                                             } else {
-                                                clients.get(editOrder).toString();
+                                                validStatus = true;
+                                                index = editOrder - 1;
+                                                System.out.println(clients.get(index).toString());
+                                                sc.nextLine();
                                             }
-                                            validStatus = true;
                                         } catch (InputMismatchException e) {
                                             System.out.println("Erro: entrada inválida. Por favor, digite um número inteiro.");
+                                        } catch (IndexOutOfBoundsException e) {
+                                            System.out.println("| Index inválido.");
                                         }
 
                                     } while (!validStatus);
-                                    
+
                                     if (editOrder == 0) {
                                         System.out.println("Retornando ao menu...");
                                         Thread.sleep(1000);
                                         break;
                                     }
-                                    
-                                    
-                                    
+
 
                                 }
 
                                 break;
-                                
+
                         }
 
                     } while (salesOption != 0);
@@ -256,7 +263,7 @@ public class Main {
         } while (choice != 0);
 
 
-
         sc.close();
     }
 }
+
