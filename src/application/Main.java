@@ -209,7 +209,7 @@ public class Main {
                                     int count = 1;
 
                                     for (int i = 0; i < clients.size(); i++) {
-                                        System.out.println("| Pedido: " + count++);
+                                        System.out.println("| Pedido: #" + count++);
                                         System.out.println(clients.get(i).toString());
                                     }
 
@@ -217,7 +217,7 @@ public class Main {
 
                                     do {
 
-                                        try { // TO - DOO arrumar essa palhaçada aqui que ta dando erro quando tento acessar os dados do pedido para edição
+                                        try {
                                             System.out.print("Digite o número do pedido a ser editado, digite 0 para voltar ao menu: ");
                                             editOrder = Integer.parseInt(sc.nextLine());
                                             if (editOrder < 1 || editOrder > clients.size()) {
@@ -225,13 +225,23 @@ public class Main {
                                             } else {
                                                 validStatus = true;
                                                 index = editOrder - 1;
-                                                System.out.println(clients.get(index).toString());
-                                                sc.nextLine();
+                                                System.out.println("Pedido: #" + editOrder);
+                                                System.out.println(clients.get(index).toString());2
+                                                System.out.println("1. Editar nome.");
+                                                System.out.println("2. Editar cpf.");
+                                                System.out.println("3. Editar email.");
+                                                System.out.println("4. Editar data do pedido.");
+                                                System.out.println("5. Editar preço p/Unidade.");
+                                                System.out.println("6. Editar quantidade.");
+                                                System.out.println("7. Editar status do pedido.");
+                                                System.out.println("0. Voltar.");
+                                                System.out.print("Escolha uma opção: ");
+                                                Integer editInfoOrder = Integer.parseInt(sc.nextLine());
                                             }
                                         } catch (InputMismatchException e) {
                                             System.out.println("Erro: entrada inválida. Por favor, digite um número inteiro.");
                                         } catch (IndexOutOfBoundsException e) {
-                                            System.out.println("| Index inválido.");
+                                            System.out.println("| Opção inválida.");
                                         }
 
                                     } while (!validStatus);
