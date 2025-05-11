@@ -20,10 +20,10 @@ public class Main {
         Double unitPrice;
         boolean validStatus = false;
 
-        orders.add(new ItemOrder("Lucas", "303.987.302-13", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-        orders.add(new ItemOrder("Diego", "239.987.232-0", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-        orders.add(new ItemOrder("Raphael", "942.842.382-09", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-        OrderEditor oeT = new OrderEditor(orders);
+        orders.add(new ItemOrder("Lucas", "303.987.302-13", "lucas_almeida@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        orders.add(new ItemOrder("Diego", "239.987.232-0", "diego_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        orders.add(new ItemOrder("Raphael", "942.842.382-09", "raphael_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        OrderEditor oe = new OrderEditor(orders);
 
         do {
             System.out.println("===========================================================================");
@@ -181,7 +181,7 @@ public class Main {
                                     }
 
                                     if (qtdOrder == 1) {
-                                        OrderEditor oe = new OrderEditor(orders);
+                                        oe = new OrderEditor(orders);
                                         System.out.println("| O pedido foi cadastrado com sucesso.");
                                         Thread.sleep(1000);
                                     } else {
@@ -227,20 +227,21 @@ public class Main {
                                                 System.out.println("| Número de pedido inválido.");
                                             } else {
                                                 index = editOrder - 1;
+                                                while (true) {
                                                 System.out.println("=====================");
                                                 System.out.println("Pedido: #" + editOrder);
                                                 System.out.println(orders.get(index).toString());
                                                 System.out.println("1. Editar nome.");
                                                 System.out.println("2. Editar cpf.");
                                                 System.out.println("3. Editar email.");
-                                                System.out.println("4. Não é possível alterar a data do pedido.");
+                                                System.out.println("Não é possível alterar a data do pedido.");
                                                 System.out.println("5. Editar preço p/Unidade.");
                                                 System.out.println("6. Editar quantidade.");
                                                 System.out.println("7. Editar status do pedido.");
                                                 System.out.println("0. Voltar.");
-                                                while (true) {
                                                     System.out.print("Escolha uma opção: ");
-                                                    Integer editInfoOrder = Integer.parseInt(sc.nextLine());
+                                                    Integer editInfoOrder = sc.nextInt();
+                                                    sc.nextLine();
                                                     if (editInfoOrder == 0) {
                                                         System.out.println();
                                                         System.out.println("| Retornando ao menu...");
@@ -255,7 +256,61 @@ public class Main {
                                                     } else {
                                                         switch (editInfoOrder) {
                                                             case 1:
+                                                                System.out.println();
+                                                                System.out.print("Digite o novo nome: ");
+                                                                name = sc.nextLine();
+                                                                oe.setName(index, name);
+                                                                System.out.println("| Nome do cliente alterado com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
 
+                                                            case 2:
+                                                                System.out.println();
+                                                                System.out.print("Digite o novo CPF: ");
+                                                                cpf = sc.nextLine();
+                                                                oe.setCPF(index, cpf);
+                                                                System.out.println("| CPF do cliente alterado com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
+
+                                                            case 3:
+                                                                System.out.println();
+                                                                System.out.print("Digite o novo Email: ");
+                                                                email = sc.nextLine();
+                                                                oe.setEmail(index, email);
+                                                                System.out.println("| Email do cliente alterado com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
+
+                                                            case 5:
+                                                                System.out.println();
+                                                                System.out.print("Digite o novo preço da unidade: ");
+                                                                unitPrice = sc.nextDouble();
+                                                                oe.setUnitPrice(index, unitPrice);
+                                                                System.out.println("| Preço p/Unidade alterado com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
+
+                                                            case 6:
+                                                                System.out.println();
+                                                                System.out.print("Digite a nova quantidade: ");
+                                                                quantityItem = Integer.parseInt(sc.nextLine());
+                                                                oe.setQuantityItem(index, quantityItem);
+                                                                System.out.println("| Quantidade alterada com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
+
+                                                            case 7:
+                                                                System.out.println();
+                                                                System.out.print("Digite o novo status do pedido (PENDENTE, PROCESSANDO, ENTREGUE, CANCELADO): ");
+                                                                OrderProcessing orderProcessing = OrderProcessing.valueOf(sc.nextLine().toUpperCase());
+                                                                oe.setStatus(index, orderProcessing);
+                                                                System.out.println("| Status do pedido alterado com sucesso.");
+                                                                Thread.sleep(1000);
+                                                                break;
+
+                                                            default:
+                                                                System.out.println("| Opção inválida.");
                                                                 break;
                                                         }
                                                     }
