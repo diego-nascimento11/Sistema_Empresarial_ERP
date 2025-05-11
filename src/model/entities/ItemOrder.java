@@ -39,15 +39,9 @@ public class ItemOrder extends Client {
         this.quantityItem = quantityItem;
     }
 
-
     @Override
     public String toString() {
-        return super.toString() +
-                String.format("\n| Preço p/Unidade: %.2f", unitPrice ) +
-                "\n| Quantidade: " + quantityItem +
-                "\n| Status do pedido: " + orderProcessing +
-                String.format("\n| Total: %.2f", total()) +
-                "\n=====================";
+        return String.format(super.toString() + "\n|Preço p/Unidade: %.2f", unitPrice + "\n|Quantidade: %d", quantityItem + "\nStatus do pedido: " + orderProcessing + "\nTotal: %.2f", total() + "\n=====================");
     }
 
     public Double total() {

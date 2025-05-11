@@ -3,9 +3,8 @@ package application;
 import model.entities.Client;
 import model.entities.ItemOrder;
 import model.entities.OrderProcessing;
+import services.OrderEditor;
 
-import javax.swing.*;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -13,7 +12,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        List<Client> clients = new ArrayList<>();
+        List<ItemOrder> orders = new ArrayList<>();
 
         Integer qtdOrder = 0, salesOption = 0, choice = 100, quantityItem, editOrder = 0, index = 0;
         String name, cpf, email;
@@ -21,10 +20,10 @@ public class Main {
         Double unitPrice;
         boolean validStatus = false;
 
-        clients.add(new ItemOrder("Lucas", "303.987.302-13", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-        clients.add(new ItemOrder("Diego", "239.987.232-0", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-        clients.add(new ItemOrder("Raphael", "942.842.382-09", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
-
+        orders.add(new ItemOrder("Lucas", "303.987.302-13", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        orders.add(new ItemOrder("Diego", "239.987.232-0", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        orders.add(new ItemOrder("Raphael", "942.842.382-09", "lucas_santos@gmail.com", new Date(), 20.00, 3, OrderProcessing.valueOf("ENTREGUE")));
+        OrderEditor oeT = new OrderEditor(orders);
 
         do {
             System.out.println("===========================================================================");
@@ -170,7 +169,7 @@ public class Main {
                                                 String statusStr = sc.nextLine().toUpperCase();
                                                 OrderProcessing orderProcessing = OrderProcessing.valueOf(statusStr);
                                                 validStatus = true;
-                                                clients.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, orderProcessing));
+                                                orders.add(new ItemOrder(name, cpf, email, new Date(), unitPrice, quantityItem, orderProcessing));
                                             } catch (IllegalArgumentException e) {
                                                 System.out.println("| Status inválido, tente novamente.");
                                             }
@@ -182,6 +181,7 @@ public class Main {
                                     }
 
                                     if (qtdOrder == 1) {
+                                        OrderEditor oe = new OrderEditor(orders);
                                         System.out.println("| O pedido foi cadastrado com sucesso.");
                                         Thread.sleep(1000);
                                     } else {
@@ -195,7 +195,7 @@ public class Main {
 
                             case 2:
 
-                                if (clients.isEmpty()) {
+                                if (orders.isEmpty()) {
                                     System.out.println();
                                     System.out.println("| Nenhum pedido cadastrado.");
                                     System.out.println();
@@ -211,9 +211,9 @@ public class Main {
 
                                     int count = 1;
 
-                                    for (int i = 0; i < clients.size(); i++) {
+                                    for (int i = 0; i < orders.size(); i++) {
                                         System.out.println("| Pedido: #" + count++);
-                                        System.out.println(clients.get(i).toString());
+                                        System.out.println(orders.get(i).toString());
                                     }
 
                                     while (true) {
@@ -223,17 +223,17 @@ public class Main {
                                             editOrder = Integer.parseInt(sc.nextLine());
                                             if (editOrder == 0) {
                                                 break;
-                                            } else if (editOrder > clients.size()) {
+                                            } else if (editOrder > orders.size()) {
                                                 System.out.println("| Número de pedido inválido.");
                                             } else {
                                                 index = editOrder - 1;
                                                 System.out.println("=====================");
                                                 System.out.println("Pedido: #" + editOrder);
-                                                System.out.println(clients.get(index).toString());
+                                                System.out.println(orders.get(index).toString());
                                                 System.out.println("1. Editar nome.");
                                                 System.out.println("2. Editar cpf.");
                                                 System.out.println("3. Editar email.");
-                                                System.out.println("4. Editar data do pedido.");
+                                                System.out.println("4. Não é possível alterar a data do pedido.");
                                                 System.out.println("5. Editar preço p/Unidade.");
                                                 System.out.println("6. Editar quantidade.");
                                                 System.out.println("7. Editar status do pedido.");
@@ -252,6 +252,12 @@ public class Main {
                                                         System.out.println("| Opção inválida, digite novamente.");
                                                         System.out.println();
                                                         continue;
+                                                    } else {
+                                                        switch (editInfoOrder) {
+                                                            case 1:
+
+                                                                break;
+                                                        }
                                                     }
                                                 }
                                             }
